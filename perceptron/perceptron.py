@@ -40,3 +40,23 @@ class Perceptron:
 
             if error_count == 0: # Early-stopping to make the Perceptron more efficient
                 break
+
+    def compute_accuracy(self, x_test, y_test):
+        correct = 0.0
+        for features, true_y in zip(x_test, y_test):
+            prediction = self.forward(features)
+            correct += int(prediction == true_y)
+
+        return correct / len(y_test)
+    
+    def decision_boundary(self):
+        w1, w2 = self.weights[0], self.weights[1]
+        b = self.bias
+
+        x1_min = -20
+        x2_min = (-(w1 * x1_min) - b) / w2
+
+        x1_max = 20
+        x2_max = (-(w1 * x1_max) - b) / w2
+
+        return x1_min, x1_max, x2_min, x2_max
