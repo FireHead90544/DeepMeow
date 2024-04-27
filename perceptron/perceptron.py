@@ -27,3 +27,16 @@ class Perceptron:
             self.weights[i] += self.learning_rate * error * features[i] # Use learning rate for updating weights
 
         return error
+
+    def train(self, x_train, y_train, epochs=10, verbose=False):
+        for epoch in range(epochs):
+            error_count = 0
+            for features, true_y in zip(x_train, y_train):
+                error = self.update(features, true_y)
+                error_count += abs(error)
+
+            if verbose:
+                print(f"Epoch {epoch + 1}, Errors: {error_count}")
+
+            if error_count == 0: # Early-stopping to make the Perceptron more efficient
+                break
