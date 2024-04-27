@@ -1,8 +1,10 @@
+import random
+
 class Perceptron:
     def __init__(self, num_features):
         self.num_features = num_features
-        self.weights = [0.0 for _ in range(num_features)]
-        self.bias = 0.0
+        self.weights = [random.uniform(-0.5, 0.5) for _ in range(num_features)]  # Initialize the model parameters 
+        self.bias = random.uniform(-0.5, 0.5) # with small random numbers instead of 0’s
 
     def forward(self, features):
         weighted_sum_z = self.bias
