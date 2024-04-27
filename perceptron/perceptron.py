@@ -66,6 +66,12 @@ class Perceptron:
         with open(model_path, "wb") as f:
             pickle.dump(self, f)
             print(f"Model saved to: {model_path}")
+
+    @staticmethod
+    def load_model(model_path):
+        with open(model_path, "rb") as f:
+            model = pickle.load(f)
+            return model
     
     def __repr__(self):
         return f"<Perceptron num_features={self.num_features}, learning_rate={self.learning_rate}, weights={self.weights}, bias={self.bias}>"
