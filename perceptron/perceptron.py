@@ -60,3 +60,6 @@ class Perceptron:
         x2_max = (-(w1 * x1_max) - b) / w2
 
         return x1_min, x1_max, x2_min, x2_max
+    
+    def __repr__(self):
+        return f"<Perceptron num_features={self.num_features}, learning_rate={self.learning_rate}, weights={self.weights}, bias={self.bias}>"
