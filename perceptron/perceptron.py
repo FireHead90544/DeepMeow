@@ -1,10 +1,11 @@
 import random
 
 class Perceptron:
-    def __init__(self, num_features):
+    def __init__(self, num_features, learning_rate=1.0):
         self.num_features = num_features
-        self.weights = [random.uniform(-0.5, 0.5) for _ in range(num_features)]  # Initialize the model parameters 
+        self.weights = [random.uniform(-0.5, 0.5) for _ in range(num_features)] # Initialize the model parameters 
         self.bias = random.uniform(-0.5, 0.5) # with small random numbers instead of 0’s
+        self.learning_rate = learning_rate # Use a learning rate for updating the weights and bias unit
 
     def forward(self, features):
         weighted_sum_z = self.bias
@@ -21,8 +22,8 @@ class Perceptron:
     def update(self, features, true_y):
         prediction = self.forward(features)
         error = true_y - prediction
-        self.bias += error
+        self.bias += self.learning_rate * error # Use learning rate for updating bias unit
         for i, _ in enumerate(self.weights):
-            self.weights[i] += error * features[i]
+            self.weights[i] += self.learning_rate * error * features[i] # Use learning rate for updating weights
 
         return error
