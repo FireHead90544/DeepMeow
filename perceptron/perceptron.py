@@ -1,4 +1,5 @@
 import random
+import pickle
 
 class Perceptron:
     def __init__(self, num_features, learning_rate=1.0):
@@ -60,6 +61,11 @@ class Perceptron:
         x2_max = (-(w1 * x1_max) - b) / w2
 
         return x1_min, x1_max, x2_min, x2_max
+    
+    def save_model(self, model_path="perceptron_model.h5"):
+        with open(model_path, "wb") as f:
+            pickle.dump(self, f)
+            print(f"Model saved to: {model_path}")
     
     def __repr__(self):
         return f"<Perceptron num_features={self.num_features}, learning_rate={self.learning_rate}, weights={self.weights}, bias={self.bias}>"
