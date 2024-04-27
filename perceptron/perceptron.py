@@ -62,6 +62,9 @@ class Perceptron:
 
         return x1_min, x1_max, x2_min, x2_max
     
+    def predict(self, x_test):
+        return self.forward(x_test)
+    
     def save_model(self, model_path="perceptron_model.h5"):
         with open(model_path, "wb") as f:
             pickle.dump(self, f)
