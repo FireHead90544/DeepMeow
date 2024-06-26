@@ -1,12 +1,17 @@
 import random
 import pickle
 
+
 class Perceptron:
     def __init__(self, num_features, learning_rate=1.0):
         self.num_features = num_features
-        self.weights = [random.uniform(-0.5, 0.5) for _ in range(num_features)] # Initialize the model parameters 
-        self.bias = random.uniform(-0.5, 0.5) # with small random numbers instead of 0’s
-        self.learning_rate = learning_rate # Use a learning rate for updating the weights and bias unit
+        self.weights = [
+            random.uniform(-0.5, 0.5) for _ in range(num_features)
+        ]  # Initialize the model parameters
+        self.bias = random.uniform(
+            -0.5, 0.5
+        )  # with small random numbers instead of 0’s
+        self.learning_rate = learning_rate  # Use a learning rate for updating the weights and bias unit
 
     def forward(self, features):
         weighted_sum_z = self.bias
@@ -23,9 +28,13 @@ class Perceptron:
     def update(self, features, true_y):
         prediction = self.forward(features)
         error = true_y - prediction
-        self.bias += self.learning_rate * error # Use learning rate for updating bias unit
+        self.bias += (
+            self.learning_rate * error
+        )  # Use learning rate for updating bias unit
         for i, _ in enumerate(self.weights):
-            self.weights[i] += self.learning_rate * error * features[i] # Use learning rate for updating weights
+            self.weights[i] += (
+                self.learning_rate * error * features[i]
+            )  # Use learning rate for updating weights
 
         return error
 
@@ -39,7 +48,9 @@ class Perceptron:
             if verbose:
                 print(f"Epoch {epoch + 1}, Errors: {error_count}")
 
-            if error_count == 0: # Early-stopping to make the Perceptron more efficient
+            if (
+                error_count == 0
+            ):  # Early-stopping to make the Perceptron more efficient
                 break
 
     def compute_accuracy(self, x_test, y_test):
@@ -49,7 +60,7 @@ class Perceptron:
             correct += int(prediction == true_y)
 
         return correct / len(y_test)
-    
+
     def decision_boundary(self):
         w1, w2 = self.weights[0], self.weights[1]
         b = self.bias
@@ -61,10 +72,10 @@ class Perceptron:
         x2_max = (-(w1 * x1_max) - b) / w2
 
         return x1_min, x1_max, x2_min, x2_max
-    
+
     def predict(self, x_test):
         return self.forward(x_test)
-    
+
     def save_model(self, model_path="perceptron_model.h5"):
         with open(model_path, "wb") as f:
             pickle.dump(self, f)
@@ -75,6 +86,6 @@ class Perceptron:
         with open(model_path, "rb") as f:
             model = pickle.load(f)
             return model
-    
+
     def __repr__(self):
         return f"<Perceptron num_features={self.num_features}, learning_rate={self.learning_rate}, weights={self.weights}, bias={self.bias}>"
